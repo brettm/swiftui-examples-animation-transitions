@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TransitionType {
+public enum TransitionType {
     case none
     case hero
     case modifiedGeometry
@@ -29,9 +29,10 @@ enum TransitionType {
     }
 }
 
-struct TransitionItem: Identifiable, Equatable, Hashable {
-    var id: String {
+public struct TransitionItem: Identifiable, Equatable, Hashable {
+    public var id: String {
         return type.name
     }
-    var type: TransitionType = .none
+    public var type: TransitionType = .none
+    public var duration: TimeInterval = TimeInterval(1.0)
 }

@@ -11,9 +11,12 @@
 		ECA486032B0B85D5002CF4DE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA486022B0B85D5002CF4DE /* ContentView.swift */; };
 		ECA486052B0B85D7002CF4DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECA486042B0B85D7002CF4DE /* Assets.xcassets */; };
 		ECA486092B0B85D7002CF4DE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ECA486082B0B85D7002CF4DE /* Preview Assets.xcassets */; };
-		ECA486102B0D03D8002CF4DE /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4860F2B0D03D8002CF4DE /* ListView.swift */; };
+		ECA486102B0D03D8002CF4DE /* TransitionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4860F2B0D03D8002CF4DE /* TransitionListView.swift */; };
 		ECA486132B0D0428002CF4DE /* TransitionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA486122B0D0428002CF4DE /* TransitionItem.swift */; };
 		ECA486152B0D065E002CF4DE /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA486142B0D065E002CF4DE /* AppState.swift */; };
+		ECA486182B14D636002CF4DE /* TimeInterval+Nanoseconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA486172B14D636002CF4DE /* TimeInterval+Nanoseconds.swift */; };
+		ECA4861B2B14D6D5002CF4DE /* TransitionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4861A2B14D6D5002CF4DE /* TransitionDetailView.swift */; };
+		ECA4861D2B14D6FC002CF4DE /* TransitionImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4861C2B14D6FC002CF4DE /* TransitionImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,9 +26,12 @@
 		ECA486042B0B85D7002CF4DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ECA486062B0B85D7002CF4DE /* TransitionExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransitionExample.entitlements; sourceTree = "<group>"; };
 		ECA486082B0B85D7002CF4DE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		ECA4860F2B0D03D8002CF4DE /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		ECA4860F2B0D03D8002CF4DE /* TransitionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionListView.swift; sourceTree = "<group>"; };
 		ECA486122B0D0428002CF4DE /* TransitionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionItem.swift; sourceTree = "<group>"; };
 		ECA486142B0D065E002CF4DE /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		ECA486172B14D636002CF4DE /* TimeInterval+Nanoseconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Nanoseconds.swift"; sourceTree = "<group>"; };
+		ECA4861A2B14D6D5002CF4DE /* TransitionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionDetailView.swift; sourceTree = "<group>"; };
+		ECA4861C2B14D6FC002CF4DE /* TransitionImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,10 +64,11 @@
 		ECA485FF2B0B85D5002CF4DE /* TransitionExample */ = {
 			isa = PBXGroup;
 			children = (
+				ECA486192B14D6AE002CF4DE /* View */,
+				ECA486162B14D614002CF4DE /* Categories */,
 				ECA486112B0D0404002CF4DE /* Model */,
 				ECA486002B0B85D5002CF4DE /* TransitionExampleApp.swift */,
 				ECA486022B0B85D5002CF4DE /* ContentView.swift */,
-				ECA4860F2B0D03D8002CF4DE /* ListView.swift */,
 				ECA486042B0B85D7002CF4DE /* Assets.xcassets */,
 				ECA486062B0B85D7002CF4DE /* TransitionExample.entitlements */,
 				ECA486072B0B85D7002CF4DE /* Preview Content */,
@@ -84,6 +91,24 @@
 				ECA486122B0D0428002CF4DE /* TransitionItem.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		ECA486162B14D614002CF4DE /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				ECA486172B14D636002CF4DE /* TimeInterval+Nanoseconds.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		ECA486192B14D6AE002CF4DE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ECA4860F2B0D03D8002CF4DE /* TransitionListView.swift */,
+				ECA4861A2B14D6D5002CF4DE /* TransitionDetailView.swift */,
+				ECA4861C2B14D6FC002CF4DE /* TransitionImageView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,8 +184,11 @@
 				ECA486032B0B85D5002CF4DE /* ContentView.swift in Sources */,
 				ECA486152B0D065E002CF4DE /* AppState.swift in Sources */,
 				ECA486132B0D0428002CF4DE /* TransitionItem.swift in Sources */,
+				ECA4861B2B14D6D5002CF4DE /* TransitionDetailView.swift in Sources */,
+				ECA486182B14D636002CF4DE /* TimeInterval+Nanoseconds.swift in Sources */,
+				ECA4861D2B14D6FC002CF4DE /* TransitionImageView.swift in Sources */,
 				ECA486012B0B85D5002CF4DE /* TransitionExampleApp.swift in Sources */,
-				ECA486102B0D03D8002CF4DE /* ListView.swift in Sources */,
+				ECA486102B0D03D8002CF4DE /* TransitionListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
