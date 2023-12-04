@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct TransitionDetail: View {
-    public var transition: TransitionItem
+    public var transition: Transition
     private(set) var namespace: Namespace.ID
     @Binding public var isTranstioning: Bool
     

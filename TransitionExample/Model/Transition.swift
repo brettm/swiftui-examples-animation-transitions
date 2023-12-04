@@ -29,7 +29,7 @@ public enum TransitionType {
     }
 }
 
-public struct TransitionItem: Identifiable, Equatable, Hashable {
+public struct Transition: Identifiable, Equatable, Hashable {
     public var id: String {
         return type.name
     }
