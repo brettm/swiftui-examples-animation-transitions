@@ -8,14 +8,30 @@
 import Foundation
 
 class AppState {
-    static let transitionItems: [TransitionItem] = {
+    static let transitionItems: [Transition] = {
         return [
-            TransitionItem(
-                type: .none
+            Transition(
+                type: .none,
+                systemSymbolName: "play.rectangle"
             ),
-            TransitionItem(
-                type: .hero
+            Transition(
+                type: .hero,
+                systemSymbolName: "figure.run"
             )
+        ]
+    }()
+    
+    static let supportedSystemImages: [String] = {
+        return [
+            "paperplane",
+            "newspaper",
+            "personalhotspot.circle",
+            "shareplay",
+            "person.wave.2",
+            "figure.walk.motion",
+            "play.rectangle",
+            "timelapse",
+            "sun.haze.fill"
         ]
     }()
 }

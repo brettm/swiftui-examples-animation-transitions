@@ -8,7 +8,7 @@
 import Foundation
 
 extension TimeInterval {
-    public func nanoSeconds() -> UInt64 {
-        return UInt64(self * 1E+9)
+    public var nanoSeconds: UInt64 {
+        UInt64(self * 1E+9)
     }
 }

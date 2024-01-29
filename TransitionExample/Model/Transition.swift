@@ -5,34 +5,27 @@
 //  Created by Brett Meader on 21/11/2023.
 //
 
-import Foundation
+import SwiftUI
 
-public enum TransitionType {
+public enum TransitionType: Int {
     case none
     case hero
     case modifiedGeometry
     
     var name: String {
-        switch self {
+        switch(self) {
         case .none: return "Default"
         case .hero: return "Hero"
         case .modifiedGeometry: return "Modified Geometry"
         }
     }
-    
-    var systemImageName: String {
-        switch self {
-        case .none: return "play.rectangle"
-        case .hero: return "trophy"
-        case .modifiedGeometry: return "triangle"
-        }
-    }
 }
 
 public struct Transition: Identifiable, Equatable, Hashable {
-    public var id: String {
-        return type.name
+    public var id: Int {
+        return type.rawValue
     }
     public var type: TransitionType = .none
-    public var duration: TimeInterval = TimeInterval(1.0)
+    public var systemSymbolName: String
+    public var duration: TimeInterval = TimeInterval(0.75)
 }

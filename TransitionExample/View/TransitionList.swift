@@ -6,26 +6,24 @@
 //
 import SwiftUI
 
-//@Observable
-//public class TransitionListViewModel {
-//    var items: [Transition] = AppState.transitionItems
-//}
-
 public struct TransitionList: View {
-    
-    public var items: [Transition]
+
+    @Binding public var items: [Transition]
     @Binding public var viewStack: [Transition]
     @Binding public var isTransitioning: Bool
     
     @State private var showDetail = false
+    @State private var animateHeroKeyframes = false
+    @State private var showDefaultImagePicker = false
+    
     @Namespace private var namespace
     
     public var body: some View {
         if self.showDetail {
-            TransitionDetail(transition: Transition(type: .modifiedGeometry),
-                             namespace: self.namespace,
-                             isTranstioning: $isTransitioning)
-            
+            TransitionDetail(transition: Transition(type: .modifiedGeometry, systemSymbolName: "triangle"),
+                             isTranstioning: $isTransitioning,
+                             namespace: self.namespace
+            )
             .contentShape(Rectangle())
             .background(.blue)
             .onTapGesture {
@@ -39,75 +37,76 @@ public struct TransitionList: View {
                 NavigationStack(path: $viewStack) {
                     List {
                         Section {
-                            ForEach(items) { item in
+                            ForEach($items) { $item in
                                 NavigationLink(value: item) {
                                     HStack {
-                                        Image(systemName: item.type.systemImageName)
+                                        TransitionImage(systemImageName: item.systemSymbolName)
                                             .anchorPreference(
                                                 key: BoundsAnchorPreferenceKey.self,
                                                 value: .bounds
                                             ) { boundsAnchor in
                                                 return [item.id: boundsAnchor]
                                             }
+                                            .frame(maxWidth: 40, maxHeight: 20)
+                                            .contentTransition(.symbolEffect)
                                         Text(item.type.name)
                                     }
                                 }
                             }
-                        } footer: {
-                            HStack {
-                                Spacer()
-                                Button {
-                                    withAnimation {
-                                        self.showDetail = true
-                                    }
-                                } label: {
-                                    Image(systemName: TransitionType.modifiedGeometry.systemImageName)
+                        }
+                        header: {
+                            Text("Navigation Stack")
+                        }
+                        Section {
+                            Button {
+                                withAnimation {
+                                    self.showDetail = true
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "triangle")
                                         .matchedGeometryEffect(
                                             id: TransitionType.modifiedGeometry,
                                             in: self.namespace
                                         )
                                     Text(TransitionType.modifiedGeometry.name)
                                 }
-                                Spacer()
                             }
-                            .padding(.top)
+                        }
+                        header: {
+                            Text("View")
+                        }
+                        Section {
+                            Button {
+                                self.showDefaultImagePicker = true
+                            } label: {
+                                HStack {
+                                    Text("Default Image")
+                                    Spacer()
+                                    if let defaultTransition = items.first(where: { transition in
+                                        transition.type == .none
+                                    }) {
+                                        TransitionImage(systemImageName: defaultTransition.systemSymbolName)
+                                        .frame(maxHeight: 20)
+                                    }
+                                }
+                            }
+                        }
+                        header: {
+                            Text("Settings")
                         }
                     }
                     .navigationDestination(for: Transition.self) { transition in
                         TransitionDetail(transition: transition,
-                                         namespace: self.namespace,
-                                         isTranstioning: $isTransitioning)
+                                         isTranstioning: $isTransitioning,
+                                         namespace: self.namespace)
                     }
                     .navigationTitle("Transitions")
                 }
-//                .overlayPreferenceValue(BoundsAnchorPreferenceKey.self) { value in
-//                    if let item = viewStack.last,
-//                        item.type == .hero {
-//                        
-//                        GeometryReader { metrics in
-//                            if let anchor = value[item.id] {
-//                                let rect = metrics[anchor]
-//                                
-//                                TransitionImage(systemImageName: item.type.systemImageName)
-//                                    .rotation3DEffect(.radians(rotation), axis: (x: 0, y: 1, z: 0))
-//                                    .animation(
-//                                        .easeInOut(duration: item.duration * 0.9),
-//                                        value: rotation
-//                                    )
-//                                    .opacity(isTransitioning ? 1 : 0)
-//                                    .frame(width: rect.size.width, height: rect.size.height)
-//                                    .position(x: rect.midX, y: rect.midY)
-//                                    .animation(
-//                                        .snappy(duration: item.duration, extraBounce: 0),
-//                                        value: rect
-//                                    )
-//                                    .onAppear{
-//                                        rotation += 2.0 * Double.pi
-//                                    }
-//                            }
-//                        }
-//                    }
-//                }
+                .sheet(isPresented: $showDefaultImagePicker) {
+                    SystemImagePicker(selectedImageName: $items.first!.systemSymbolName)
+                        .presentationDetents([.medium])
+                }
             }
         }
     }
