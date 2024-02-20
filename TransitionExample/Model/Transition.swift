@@ -22,9 +22,7 @@ public enum TransitionType: Int {
 }
 
 public struct Transition: Identifiable, Equatable, Hashable {
-    public var id: Int {
-        return type.rawValue
-    }
+    public var id: Int { return type.rawValue }
     public var type: TransitionType = .none
     public var systemSymbolName: String
     public var duration: TimeInterval = TimeInterval(0.75)

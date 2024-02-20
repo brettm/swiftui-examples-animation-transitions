@@ -15,12 +15,18 @@ private struct AnimationValues {
 }
 
 private enum AnimationPhase: String, CaseIterable, Identifiable {
-    var id: String {
-        return self.rawValue
-    }
+    var id: String { return self.rawValue }
     case initial
     case squash
     case squeeze
+}
+
+@Observable
+private class TransitionDetailViewModel {
+    var animateImage: Bool = false
+    var animateKeyframes: Bool = false
+    var animatePhases: Bool = false
+    var currentPhase: AnimationPhase = .initial
 }
 
 public struct TransitionDetail: View {
@@ -28,10 +34,7 @@ public struct TransitionDetail: View {
     public var transition: Transition
     @Binding public var isTranstioning: Bool
     
-    @State private var animateImage: Bool = false
-    @State private var animateKeyframes: Bool = false
-    @State private var animatePhases: Bool = false
-    @State private var selectedPhase: AnimationPhase = .initial
+    @State private var viewModel = TransitionDetailViewModel()
 
     private(set) var namespace: Namespace.ID
     
@@ -54,16 +57,16 @@ public struct TransitionDetail: View {
                     ) { boundsAnchor in
                         return [transition.id: boundsAnchor]
                     }
-                    .symbolEffect(.bounce, value: animateImage ? 1 : 0)
-                    .phaseAnimator(AnimationPhase.allCases, trigger: animatePhases) { content, phase in
-                        content
-                            .scaleEffect(CGSize(width: phase == .squeeze ? 0.4 : 1.0,
-                                                height: phase == .squash ? 0.4 : 1.0))
-                    } animation: { phase in
-                        self.selectedPhase = phase
+                    .symbolEffect(.bounce, value: viewModel.animateImage ? 1 : 0)
+                    .phaseAnimator(AnimationPhase.allCases, trigger: viewModel.animatePhases) { content, phase in
+                        content.scaleEffect(
+                            CGSize(width: phase == .squeeze ? 0.4 : 1.0,
+                                   height: phase == .squash ? 0.4 : 1.0))
+                    } animation:{ phase in
+                        viewModel.currentPhase = phase
                         return .spring
                     }
-                    .keyframeAnimator(initialValue: AnimationValues(), trigger: animateKeyframes) { content, value in
+                    .keyframeAnimator(initialValue: AnimationValues(), trigger: viewModel.animateKeyframes) { content, value in
                         content
                             .rotationEffect(value.angle)
                             .rotation3DEffect(value.yRotation, axis: (0, 1, 0))
@@ -100,18 +103,20 @@ public struct TransitionDetail: View {
                     }
                     .navigationTitle(transition.type.name)
                 Spacer()
+                
                 if transition.type == .hero {
-                    Button {
-                        self.animateKeyframes.toggle()
+                    Button { 
+                        viewModel.animateKeyframes.toggle()
                     } label: {
                         Text("Animate Keyframes")
                     }
                     .buttonStyle(.bordered)
                 }
+            
                 if transition.type == .none {
                     VStack(alignment: .leading) {
                         Text("Phase Animations").font(.headline).frame(alignment: .leading)
-                        Picker("Phase Animations", selection: $selectedPhase) {
+                        Picker("Phase Animations", selection: $viewModel.currentPhase) {
                             ForEach(AnimationPhase.allCases) { phase in
                                 Text(phase.rawValue.capitalized).tag(phase)
                             }
@@ -122,7 +127,7 @@ public struct TransitionDetail: View {
                     .padding(20)
                     Spacer()
                     Button {
-                        self.animatePhases.toggle()
+                        viewModel.animatePhases.toggle()
                     } label: {
                         Text("Animate Phases")
                     }
@@ -135,7 +140,7 @@ public struct TransitionDetail: View {
             isTranstioning = true
             Task {
                 try? await Task.sleep(nanoseconds: transition.duration.nanoSeconds)
-                animateImage = true
+                viewModel.animateImage = true
                 isTranstioning = false
             }
         }

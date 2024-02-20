@@ -22,16 +22,12 @@ public class TransitionViewModel: Codable, ObservableObject {
     }
     
     public var jsonData: Data? {
-        get {
-            return try? JSONEncoder().encode(self)
-        }
+        get { return try? JSONEncoder().encode(self) }
         set {
             guard
                 let data = newValue,
                 let cached = try? JSONDecoder().decode(type(of: self), from: data)
-            else {
-                return
-            }
+            else { return }
             self.items = cached.items.sorted(by: { $0.id < $1.id })
         }
     }

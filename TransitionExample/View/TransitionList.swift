@@ -27,9 +27,7 @@ public struct TransitionList: View {
             .contentShape(Rectangle())
             .background(.blue)
             .onTapGesture {
-                withAnimation {
-                    self.showDetail = false
-                }
+                withAnimation { self.showDetail = false }
             }
         }
         else {
@@ -54,9 +52,7 @@ public struct TransitionList: View {
                                 }
                             }
                         }
-                        header: {
-                            Text("Navigation Stack")
-                        }
+                        header: { Text("Navigation Stack") }
                         Section {
                             Button {
                                 withAnimation {
@@ -73,9 +69,7 @@ public struct TransitionList: View {
                                 }
                             }
                         }
-                        header: {
-                            Text("View")
-                        }
+                        header: { Text("View") }
                         Section {
                             Button {
                                 self.showDefaultImagePicker = true
@@ -92,9 +86,7 @@ public struct TransitionList: View {
                                 }
                             }
                         }
-                        header: {
-                            Text("Settings")
-                        }
+                        header: { Text("Settings") }
                     }
                     .navigationDestination(for: Transition.self) { transition in
                         TransitionDetail(transition: transition,
